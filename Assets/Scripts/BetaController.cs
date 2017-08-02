@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BetaController : MonoBehaviour {
 
-	Animator animator;
+	public string exercise;
+
+	private Animator animator;
 
 	// Use this for initialization
 	void Start () {

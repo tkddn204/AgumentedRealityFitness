@@ -8,43 +8,34 @@ using Constants;
 public class CanvasManager : MonoBehaviour {
 
 	public int currentCanvasIndex = 0;
+	public GameObject currentCanvas;
 
-	private Transform canvasListTransform;
+	private Transform canvasListTransform;  // To grab "Canvas List" context
 	private string[] canvasNames = Enum.GetNames (typeof(Constants.CanvasEnum));
-	private GameObject currentCanvas;
 
 	void Start () {
 		canvasListTransform = GameObject.Find ("/UI/Canvas List").transform;
+		canvasListDeactive ();
+		changeCanvas (currentCanvasIndex);
+	}
+
+	void canvasListDeactive() {
 		foreach (string canvas in canvasNames) {
 			canvasListTransform.Find(canvas).gameObject.SetActive (false);
 		}
-		currentCanvas = canvasListTransform
-			.Find (canvasNames [currentCanvasIndex]).gameObject;
+	}
+
+	public void changeCanvas(int canvasIndex) {
+		currentCanvas = canvasListTransform.Find (canvasNames [canvasIndex]).gameObject;
 		currentCanvas.SetActive (true);
-		StartCoroutine ("UpdateCanvas");
 	}
 
-	void Update () {
-	}
-
-	float seconds = 3.0f;
-	IEnumerator UpdateCanvas() {
-		while (true) {
-			yield return new WaitForSeconds (seconds);
-			ChangeCanvas ();
+	public void nextCanvas() {
+		if (currentCanvasIndex < 0 || currentCanvasIndex > canvasNames.Length) {
+			throw new IndexOutOfRangeException (
+				"currentCanvasIndex가 범위에서 벗어났습니다 : " + currentCanvasIndex);
 		}
-	}
-
-	void ChangeCanvas() {
 		currentCanvas.SetActive (false);
-		if (currentCanvasIndex != 7) {
-			currentCanvas = canvasListTransform
-				.Find (canvasNames [++currentCanvasIndex]).gameObject;
-		} else {
-			currentCanvasIndex = 0;
-			currentCanvas = canvasListTransform
-				.Find (canvasNames [currentCanvasIndex]).gameObject;
-		}
-		currentCanvas.SetActive (true);
+		changeCanvas (++currentCanvasIndex);
 	}
 }

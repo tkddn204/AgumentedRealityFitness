@@ -33,13 +33,14 @@ namespace OpenCV
 		public void TextureToMat(Color32[] color) {
 			Parallel.For(0, imageHeight, i => {
 				int index;
+				Vec3b vec3b = new Vec3b(0,0,0);
 				for (var j = 0; j < imageWidth; j++) {
 					index = j + i * imageWidth;
-					sourceImage[index] = new Vec3b {
-						Item0 = color[index].b,
-						Item1 = color[index].g,
-						Item2 = color[index].r
-					};
+					vec3b.Item0 = color[index].b;
+					vec3b.Item1 = color[index].g;
+					vec3b.Item2 = color[index].r;
+
+					sourceImageData[index] = vec3b;
 				}
 			});
 
@@ -47,13 +48,12 @@ namespace OpenCV
 			Cv2.Flip(sourceImage, sourceImage, FlipMode.X);
 		}
 
-		public void ShowImage() {
+		void ShowTransformImage() {
 			Cv2.ImShow ("변환 이미지", transformImage);
 		}
 
-		public void DestroyImage() {
+		~OpenCVImage() {
 			Cv2.DestroyAllWindows();
 		}
 	}
 }
-

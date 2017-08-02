@@ -14,7 +14,7 @@ public enum ProcessCanvases {
 	StopExerciseCanvas
 }
 
-public class CanvasManagerTest : MonoBehaviour {
+public class CanvasTest : MonoBehaviour {
 
 	public int currentCanvasIndex = 0;
 
