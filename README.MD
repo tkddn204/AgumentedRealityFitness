@@ -1,28 +1,6 @@
-OpenCVSharp 3 in Unity Example
+AgumentedRealityFitness
 ===
-Author: [Long Qian](http://longqian.me/aboutme/)
+**This project has been being made.** forked from [OpenCVSharp3](https://github.com/shimat/opencvsharp)
 
-Date: 2016-06-07
-
-## OpenCVSharp 3
-Wrapper for OpenCV on .NET framework
-
-See [OpenCVSharp3](https://github.com/shimat/opencvsharp)
-
-OpenCVSharp version should be identical to OpenCV version.
-
-## Unity3D Canny Edge Display
-* Conversion between OpenCVSharp image format (_Mat_) to Unity3D image holder (*Texture2D*). The conversion is paralleled, inspired by another [example](https://sourceforge.net/projects/unityopencvsharpcamshift/)
-* Currently supports windows x86, x64 standalone and Unity editor.
-
-## Capture
-
-![capture](capture.png "Capture")
-
-## Fix
-For my PC, several reference assemblies need to be copied to Plugins folder:
-
-* PresentationCore.dll
-* UIAutomationProvider.dll
-* UIAutomationTypes.dll
-* WindowsBase.dll
+## What make?
+I'll make it easy for users to Fitness(Exercise). I tried to use "UnityForOpenCV" or "OpenCVPlus(Unity)" **but** the budget is not enough. So I try to create a project using OpenCVSharp. **Very Very** Thank you for [Long Qian](http://longqian.me/aboutme/) is the source of this project.
