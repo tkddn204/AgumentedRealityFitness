@@ -18,6 +18,10 @@ public class WebCamTextureManager : MonoBehaviour
 	// OpenCV Image Setting Object
 	private OpenCVImage openCVImage;
 
+	void Awake() {
+		openCVImage = OpenCVImage.Instance(webCamHeight, webCamWidth);
+	}
+
 	void Start() {
 		WebCamDevice[] devices = WebCamTexture.devices;
 
@@ -29,7 +33,6 @@ public class WebCamTextureManager : MonoBehaviour
 			webCamTextureRenderer.material.mainTexture = _webCamTexture;
 			_webCamTexture.Play ();
 
-			openCVImage = new OpenCVImage (webCamHeight, webCamWidth);
 		}
 	}
 

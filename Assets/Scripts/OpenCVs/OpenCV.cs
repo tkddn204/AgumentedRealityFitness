@@ -8,6 +8,8 @@ using OpenCvSharp;
 using Uk.Org.Adcock.Parallel;
 using System.Runtime.InteropServices;
 
+using Constants;
+
 namespace OpenCV
 {
 	public class OpenCVImage
@@ -19,7 +21,9 @@ namespace OpenCV
 		private int imageHeight;
 		private int imageWidth;
 
-		public OpenCVImage (int height, int width)
+		private WebCamProcess webCamProcess = null;
+
+		private OpenCVImage (int height, int width)
 		{
 			this.imageHeight = height;
 			this.imageWidth = width;
@@ -45,14 +49,51 @@ namespace OpenCV
 			});
 
 			sourceImage.SetArray(0, 0, sourceImageData);
-			Cv2.Flip(sourceImage, sourceImage, FlipMode.X);
+			Cv2.Flip(sourceImage, sourceImage, FlipMode.XY);
 		}
 
-		void ShowTransformImage() {
-			Cv2.ImShow ("변환 이미지", transformImage);
+		public void SetWebCamProcessFromCanvas(int currentCanvasIndex) {
+			switch (currentCanvasIndex) {
+			case (int)CanvasEnum.CaptureBackgroundCanvas:
+				webCamProcess = new CaptureBackground ();
+				break;
+			default:
+				webCamProcess = null;
+				break;
+			}
 		}
 
-		~OpenCVImage() {
+		public void ProcessTransformImage(){
+			if (webCamProcess != null) {
+				webCamProcess.Process (sourceImage, transformImage);
+				ShowTransformImage ();
+			}
+		}
+
+		public void ShowTransformImage() {
+			Cv2.ImShow ("TransformImage", transformImage);
+		}
+
+		// Singletone
+		private static volatile OpenCVImage _instance;
+		private static object _syncRoot = new object ();
+
+		public static OpenCVImage Instance(){
+			return _instance;
+		}
+
+		public static OpenCVImage Instance(int height, int width)
+		{
+			if (_instance == null) {
+				lock (_syncRoot) {
+					if (_instance == null)
+						_instance = new OpenCVImage (height, width);
+				}
+			}
+			return _instance;
+		}
+
+		public void RemoveAllWindows() {
 			Cv2.DestroyAllWindows();
 		}
 	}
