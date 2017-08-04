@@ -4,14 +4,20 @@ using UnityEngine;
 using OpenCvSharp;
 
 public class CaptureBackground : WebCamProcess {
-	//BackgroundSubtractor mog2;
 
-	public CaptureBackground() {
-		//mog2 = BackgroundSubtractorMOG2.Create(10, 16, false);
+	Mat backgroundImage;
+	int currentCanvasIndex;
+
+	public CaptureBackground () {
+		backgroundImage = new Mat ();
+		currentCanvasIndex = GameObject.Find ("/UI/Canvas Manager")
+			.GetComponent<CanvasManager> ().currentCanvasIndex;
 	}
 
 	public void Process (Mat _srcImage, Mat _dstImage) {
-		//mog2.Apply (_srcImage, _dstImage, 0.1d);
-		//Debug.Log("들어옴!");
+		if (currentCanvasIndex == 1) {
+			_srcImage.CopyTo(backgroundImage);
+			Cv2.ImShow ("BackgroundImage", backgroundImage);
+		}
 	}
 }

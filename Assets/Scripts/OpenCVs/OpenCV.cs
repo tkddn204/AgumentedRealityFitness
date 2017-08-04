@@ -30,7 +30,7 @@ namespace OpenCV
 
 			sourceImage = new Mat(height, width, MatType.CV_8UC3);
 			sourceImageData = new Vec3b[height * width];
-			transformImage = new Mat(height, width, MatType.CV_8UC1);
+			transformImage = new Mat(height, width, MatType.CV_8UC3);
 		}
 
 		// Color32 배열로 변환된 텍스쳐에서 Mat으로 변환
@@ -66,12 +66,7 @@ namespace OpenCV
 		public void ProcessTransformImage(){
 			if (webCamProcess != null) {
 				webCamProcess.Process (sourceImage, transformImage);
-				ShowTransformImage ();
 			}
-		}
-
-		public void ShowTransformImage() {
-			Cv2.ImShow ("TransformImage", transformImage);
 		}
 
 		// Singletone

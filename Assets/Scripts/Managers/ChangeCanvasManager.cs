@@ -13,4 +13,10 @@ public class ChangeCanvasManager : MonoBehaviour {
 			.GetComponent<OpenCVManager> ().changeCanvas (
 				(int)CanvasEnum.CaptureBackgroundCanvas);
 	}
+
+	public void captureBackground() {
+		GameObject.Find ("/OpenCV Manager")
+			.GetComponent<OpenCVManager> ().changeCanvas (
+				(int)CanvasEnum.SettingPatnerPositionCanvas);
+	}
 }
