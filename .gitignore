@@ -29,3 +29,15 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Vuforia files
+/Assets/Resources
+/Assets/Editor
+/Assets/StreamingAssets
+/Assets/Vuforia
+
+/Assets/Plugins/WSA/
+/Assets/Plugins/VuforiaWrapper.bundle
+/Assets/Plugins/Android
+/Assets/Plugins/iOS
+/Assets/Plugins/Editor

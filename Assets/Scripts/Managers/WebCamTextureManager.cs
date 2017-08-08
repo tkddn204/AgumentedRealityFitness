@@ -24,12 +24,12 @@ public class WebCamTextureManager : MonoBehaviour
 
 	void Start() {
 		WebCamDevice[] devices = WebCamTexture.devices;
-
 		if (devices.Length < 0) {
 			Debug.Log ("카메라가 없습니다.");
 		} else {
 			_webCamTexture = new WebCamTexture (devices [deviceNumber].name,
 				webCamWidth, webCamHeight);
+			_webCamTexture = new WebCamTexture(devices [deviceNumber].name);
 			webCamTextureRenderer.material.mainTexture = _webCamTexture;
 			_webCamTexture.Play ();
 

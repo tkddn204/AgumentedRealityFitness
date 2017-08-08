@@ -52,10 +52,18 @@ namespace OpenCV
 			Cv2.Flip(sourceImage, sourceImage, FlipMode.XY);
 		}
 
+		public void InputMat(Mat inputMat) {
+			sourceImage = inputMat;
+			Cv2.Flip(sourceImage, sourceImage, FlipMode.XY);
+		}
+
 		public void SetWebCamProcessFromCanvas(int currentCanvasIndex) {
 			switch (currentCanvasIndex) {
 			case (int)CanvasEnum.CaptureBackgroundCanvas:
 				webCamProcess = new CaptureBackground ();
+				break;
+			case (int)CanvasEnum.StepByStepCanvas:
+				webCamProcess = new StepByStep ();
 				break;
 			default:
 				webCamProcess = null;

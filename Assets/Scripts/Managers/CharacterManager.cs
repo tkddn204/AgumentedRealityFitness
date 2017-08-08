@@ -7,7 +7,7 @@ public class CharacterManager : MonoBehaviour {
 	private GameObject Beta;
 
 	void Start () {
-		Beta = GameObject.Find ("/Characters/Beta").gameObject;
+		Beta = GameObject.Find ("/ImageTarget/Beta").gameObject;
 	}
 
 	public void SetActiveCharacter(bool active) {
