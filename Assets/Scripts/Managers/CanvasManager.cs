@@ -43,7 +43,8 @@ public class CanvasManager : MonoBehaviour {
 			case (int)CanvasEnum.CompleteBeforeSettingCanvas:
 				Wait (2.0f, nextCanvas);
 				break;
-			case (int)CanvasEnum.StepByStepCanvas:
+			case (int)CanvasEnum.ReadyExerciseCanvas:
+				Wait (2.0f, nextCanvas);
 				break;
 			default:
 				break;
@@ -74,6 +75,9 @@ public class CanvasManager : MonoBehaviour {
 		if (currentCanvas != null) {
 			currentCanvas.SetActive (false);
 		}
+		currentCanvasIndex = canvasIndex;
+		GameObject.Find("/Managers/OpenCV Manager")
+			.GetComponent<OpenCVManager>().WebCamProcessFromCanvas (canvasIndex);
 		currentCanvas = canvasListTransform.Find (canvasNames [canvasIndex]).gameObject;
 		currentCanvas.SetActive (true);
 	}
@@ -83,9 +87,6 @@ public class CanvasManager : MonoBehaviour {
 			throw new IndexOutOfRangeException (
 				"currentCanvasIndex가 범위에서 벗어났습니다 : " + currentCanvasIndex);
 		}
-		currentCanvasIndex++;
-		GameObject.Find("/Managers/OpenCV Manager")
-			.GetComponent<OpenCVManager>().WebCamProcessFromCanvas (currentCanvasIndex);
-		changeCanvas (currentCanvasIndex);
+		changeCanvas (++currentCanvasIndex);
 	}
 }

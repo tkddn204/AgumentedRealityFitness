@@ -19,6 +19,19 @@ namespace Constants
 		public const String Pushup = "팔굽혀펴기";
 		public const String Situp = "윗몸일으키기";
 		public const String SpreadArmsAndJump = "팔벌려뛰기";
+
+		public static int GetStep(string exercise) {
+			switch (exercise) {
+			case Pushup:
+				return 2;
+			case Situp:
+				return 2;
+			case SpreadArmsAndJump:
+				return 2;
+			default:
+				return -1;
+			}
+		}
 	}
 }
 
