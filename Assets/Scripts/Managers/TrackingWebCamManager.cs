@@ -44,7 +44,6 @@ public class TrackingWebCamManager: MonoBehaviour
 		} finally {
 			vuforiaCamera.targetTexture = null;
 		}
-
 	}
 
 	void onDestory() {

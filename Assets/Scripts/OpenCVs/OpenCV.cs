@@ -18,6 +18,8 @@ namespace OpenCV
 		private Vec3b[] sourceImageData;
 		private Mat transformImage;
 
+		private Mat backgroundImage;
+
 		private int imageHeight;
 		private int imageWidth;
 
@@ -61,6 +63,10 @@ namespace OpenCV
 			switch (currentCanvasIndex) {
 			case (int)CanvasEnum.CaptureBackgroundCanvas:
 				webCamProcess = new CaptureBackground ();
+				break;
+			case (int)CanvasEnum.SettingPatnerPositionCanvas:
+				backgroundImage = transformImage.Clone ();
+				webCamProcess = null;
 				break;
 			case (int)CanvasEnum.StepByStepCanvas:
 				webCamProcess = new StepByStep ();

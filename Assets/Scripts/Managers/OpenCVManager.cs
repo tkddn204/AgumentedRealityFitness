@@ -9,17 +9,17 @@ public class OpenCVManager : MonoBehaviour {
 	OpenCVImage openCVImage;
 
 	void Start () {
-		openCVImage = OpenCVImage.Instance();
-	}
-
-	public void changeCanvas(int canvasIndex) {
-		openCVImage.SetWebCamProcessFromCanvas(canvasIndex);
+		openCVImage = OpenCVImage.Instance ();
 	}
 
 	void Update () {
 		openCVImage.ProcessTransformImage ();
 	}
 
+	public void WebCamProcessFromCanvas(int canvasIndex) {
+		openCVImage.SetWebCamProcessFromCanvas(canvasIndex);
+	}
+		
 	void OnDestroy() {
 		openCVImage.RemoveAllWindows ();
 	}
