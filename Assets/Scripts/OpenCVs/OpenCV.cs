@@ -18,7 +18,7 @@ namespace OpenCV
 		private Vec3b[] sourceImageData;
 		private Mat transformImage;
 
-		private Mat backgroundImage;
+		public Mat backgroundImage;
 
 		private int imageHeight;
 		private int imageWidth;
@@ -54,11 +54,6 @@ namespace OpenCV
 			Cv2.Flip(sourceImage, sourceImage, FlipMode.XY);
 		}
 
-		public void InputMat(Mat inputMat) {
-			sourceImage = inputMat;
-			Cv2.Flip(sourceImage, sourceImage, FlipMode.XY);
-		}
-
 		public void SetWebCamProcessFromCanvas(int currentCanvasIndex) {
 			switch (currentCanvasIndex) {
 			case (int)CanvasEnum.CaptureBackgroundCanvas:
@@ -79,6 +74,7 @@ namespace OpenCV
 
 		public void ProcessTransformImage(){
 			if (webCamProcess != null) {
+				Cv2.Flip(sourceImage, sourceImage, FlipMode.Y);
 				webCamProcess.Process (sourceImage, transformImage);
 			}
 		}

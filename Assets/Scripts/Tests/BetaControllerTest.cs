@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BetaController : MonoBehaviour {
+public class BetaControllerTest : MonoBehaviour {
 
 	public string exercise;
 
@@ -16,13 +16,17 @@ public class BetaController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Q)) {
-			animator.SetInteger ("Pushup State", 0);
+			//animator.SetInteger ("Pushup", 0);
+			animator.SetInteger ("Situp", 0);
 		} else if (Input.GetKeyDown (KeyCode.W)) {
-			animator.SetInteger ("Pushup State", 1);
+			//animator.SetInteger ("Pushup", 1);
+			animator.SetInteger ("Situp", 1);
 		} else if (Input.GetKeyDown (KeyCode.E)) {
-			animator.SetInteger ("Pushup State", 2);
+			//animator.SetInteger ("Pushup", 2);
+			animator.SetInteger ("Situp", 2);
 		} else if (Input.GetKeyDown (KeyCode.R)) {
-			animator.SetInteger ("Pushup State", 3);
+			//animator.SetInteger ("Pushup", 3);
+			animator.SetInteger ("Situp", 3);
 		}
 	}
 }
