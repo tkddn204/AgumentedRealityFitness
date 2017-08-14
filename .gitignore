@@ -30,6 +30,12 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+# Project Settings
+/ProjectSettings
+
+# OpenCV files
+/QCAR
+
 # Vuforia files
 /Assets/Resources
 /Assets/Editor

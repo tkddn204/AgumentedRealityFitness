@@ -21,13 +21,12 @@ public class TrackingWebCamManager: MonoBehaviour
 	void Awake() {
 		openCVImage = OpenCVImage.Instance(webCamHeight, webCamWidth);
 
-		renderTexture = new RenderTexture (webCamWidth, webCamHeight, 24);
+		renderTexture = new RenderTexture (webCamWidth, webCamHeight, 16);
 		screenShot = new Texture2D (webCamWidth, webCamHeight);
 		screenShotRect = new Rect (0, 0, webCamWidth, webCamHeight);
 	}
 
 	void start() {
-		//StartCoroutine ("updateCameraImage");
 	}
 
 	void Update() {
