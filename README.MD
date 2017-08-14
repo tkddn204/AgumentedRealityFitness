@@ -1,4 +1,4 @@
-AgumentedRealityFitness
+AugmentedRealityFitness
 ===
 **This project has been being made.** forked from [OpenCVSharp3Unity](https://github.com/qian256/OpenCVSharp3Unity)
 
