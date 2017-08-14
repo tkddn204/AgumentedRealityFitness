@@ -14,7 +14,7 @@ public class StepByStep : WebCamProcess {
 
 	public StepByStep () {
 		openCVImage = OpenCVImage.Instance();
-		size = new Size (7, 7);
+		size = new Size (5, 5);
 		blurElement = Cv2.GetStructuringElement(MorphShapes.Ellipse, size, new Point(3, 3));
 	}
 	public void Process (Mat _srcImage, Mat _dstImage) {
@@ -26,6 +26,7 @@ public class StepByStep : WebCamProcess {
 
 		Cv2.GaussianBlur (_dstImage, _dstImage, size, 5);
 		Cv2.Dilate (_dstImage, _dstImage, blurElement);
+		Cv2.Erode (_dstImage, _dstImage, blurElement);
 
 		//Cv2.CalcOpticalFlowPyrLK(
 

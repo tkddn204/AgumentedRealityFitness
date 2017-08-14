@@ -19,16 +19,12 @@ public class ContinueExerciseText : MonoBehaviour {
 		text.text = "시간 : " + (int)time + "초" +
 			"     " + "횟수 : " + count + "\n"
 			+ "파트너의 운동 횟수 : " + patnerCount;
-		PatnerCountUp ();
+		//PatnerCountUp ();
 	}
 
 	void Start () {
 		text = GetComponent<Text>();
 		Init ();
-	}
-
-	void PatnerCountUp() {
-		
 	}
 
 	public void Init() {
