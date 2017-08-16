@@ -23,7 +23,19 @@ public class BetaController : MonoBehaviour {
 		animator.SetInteger (exercise, 2);
 	}
 
-	public void stopExerciseAnimation() {
-		animator.SetInteger (exercise, 0);
+    private string step = "Step";
+    public void nextStep()
+    {
+        animator.SetBool(step, true);
+    }
+    public void endStep()
+    {
+        animator.SetBool(step, false);
+    }
+
+	public void stopExerciseAnimation()
+    {
+        animator.SetBool(step, false);
+        animator.SetInteger (exercise, 0);
 	}
 }

@@ -5,15 +5,21 @@ using OpenCvSharp.UserInterface;
 
 class TrackBar {
 
+    public int thr = 100;
 	public static readonly string WINDOW_NAME = "TrackBar";
+    CvTrackbar trackbar;
 
-	public TrackBar() {
+    public TrackBar() {
+        CreateTrackBar();
 	}
 	public void CreateTrackBar() {
 		Cv2.NamedWindow (WINDOW_NAME);
-		CvTrackbar trackbar = new CvTrackbar ("asdf", WINDOW_NAME, 120, 255,
-			new CvTrackbarCallback2 (delegate(int pos, object userdata) {
-				pos = 0;
-			}));
+		trackbar = new CvTrackbar ("thr", WINDOW_NAME, thr, 255, new CvTrackbarCallback2(callback));
 	}
+
+    void callback(int pos, object userData)
+    {
+        pos = 0;
+        
+    }
 }

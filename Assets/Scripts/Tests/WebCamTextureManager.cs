@@ -13,7 +13,7 @@ public class WebCamTextureManager : MonoBehaviour
 
 	// Webcam size
 	private const int webCamWidth = 640;
-	private const int webCamHeight = 360;
+	private const int webCamHeight = 480;
 
 	// OpenCV Image Setting Object
 	private OpenCVImage openCVImage;

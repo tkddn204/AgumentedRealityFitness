@@ -17,8 +17,6 @@ public class ContinueExercise : MonoBehaviour {
 		if (this.isActiveAndEnabled) {
 			if (!isContinuedAnimationToExercise) {
 				isContinuedAnimationToExercise = true;
-				GameObject.Find ("/ImageTarget/Beta")
-					.GetComponent<BetaController> ().continueExerciseAnimation ();
 				canvasListTransform.Find ("StopExerciseCanvas")
 					.GetComponent<StopExercise> ().isStopedAnimationToExercise = false;
 			}

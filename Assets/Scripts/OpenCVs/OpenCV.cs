@@ -51,7 +51,7 @@ namespace OpenCV
 			});
 
 			sourceImage.SetArray(0, 0, sourceImageData);
-			Cv2.Flip(sourceImage, sourceImage, FlipMode.XY);
+			Cv2.Flip(sourceImage, sourceImage, FlipMode.Y);
 		}
 
 		public void SetWebCamProcessFromCanvas(int currentCanvasIndex) {

@@ -7,13 +7,13 @@ public class TrackingWebCamManager: MonoBehaviour
 {
 	public Camera vuforiaCamera;
 
-	private RenderTexture renderTexture;
+    private RenderTexture renderTexture;
 	private Texture2D screenShot;
 	private Rect screenShotRect;
-
-	// Webcam size
-	private const int webCamWidth = 640;
-	private const int webCamHeight = 360;
+    
+    // Webcam size
+    private const int webCamWidth = 640;
+	private const int webCamHeight = 480;
 
 	// OpenCV Image Setting Object
 	private OpenCVImage openCVImage;
@@ -27,21 +27,23 @@ public class TrackingWebCamManager: MonoBehaviour
 	}
 
 	void start() {
-	}
+    }
 
 	void Update() {
-		try {
-			vuforiaCamera.targetTexture = renderTexture;
-			vuforiaCamera.Render ();
+		try
+        {
+            vuforiaCamera.targetTexture = renderTexture;
+            vuforiaCamera.Render ();
 
-			RenderTexture.active = renderTexture;
+            RenderTexture.active = renderTexture;
 
-			screenShot.ReadPixels (screenShotRect, 0, 0);
-			screenShot.Apply();
+            screenShot.ReadPixels (screenShotRect, 0, 0);
+            screenShot.Apply();
 
-			openCVImage.TextureToMat (screenShot.GetPixels32());
-		} finally {
-			vuforiaCamera.targetTexture = null;
+            openCVImage.TextureToMat(screenShot.GetPixels32());
+        } finally
+        {
+            vuforiaCamera.targetTexture = null;
 		}
 	}
 
