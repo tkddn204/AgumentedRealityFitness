@@ -5,8 +5,8 @@ namespace Constants
 	public enum CanvasEnum
 	{
 		WelcomeCanvas = 0,
-		CaptureBackgroundCanvas = 1,
-		SettingPatnerPositionCanvas = 2,
+        SettingPatnerPositionCanvas = 1,
+        CaptureBackgroundCanvas = 2,
 		CompleteBeforeSettingCanvas = 3,
 		StepByStepCanvas = 4,
 		ReadyExerciseCanvas = 5,

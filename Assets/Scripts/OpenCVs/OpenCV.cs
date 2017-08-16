@@ -21,6 +21,7 @@ namespace OpenCV
         public Mat backgroundImage;
 
         public bool stepOne = false, stepTwo = false;
+        public double stepOneHist, stepTwoHist;
         public Mat[] stepImage;
 
         private int imageHeight;
@@ -67,15 +68,21 @@ namespace OpenCV
                 case (int)CanvasEnum.CaptureBackgroundCanvas:
                     webCamProcess = new CaptureBackground();
                     break;
-                case (int)CanvasEnum.SettingPatnerPositionCanvas:
-                    backgroundImage = webCamProcess.getImages()[0];
+                case (int)CanvasEnum.CompleteBeforeSettingCanvas:
+                    if (typeof(CaptureBackground).IsInstanceOfType(webCamProcess))
+                    {
+                        backgroundImage = webCamProcess.getImages()[0];
+                    }
                     webCamProcess = null;
                     break;
                 case (int)CanvasEnum.StepByStepCanvas:
                     webCamProcess = new StepByStep();
                     break;
                 case (int)CanvasEnum.ReadyExerciseCanvas:
-                    stepImage = webCamProcess.getImages();
+                    if (typeof(StepByStep).IsInstanceOfType(webCamProcess))
+                    {
+                        stepImage = webCamProcess.getImages();
+                    }
                     webCamProcess = null;
                     break;
                 case (int)CanvasEnum.ContinueExerciseCanvas:

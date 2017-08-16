@@ -18,7 +18,7 @@ public class StopExerciseText : MonoBehaviour {
 	}
 
 	void Update () {
-		time = ContinueExercise.GetComponent<ContinueExerciseText> ().time;
+        time = ContinueExercise.GetComponent<ContinueExerciseText> ().time;
 		count = ContinueExercise.GetComponent<ContinueExerciseText> ().count;
 		patnerCount = ContinueExercise.GetComponent<ContinueExerciseText> ().patnerCount;
 		text.text = "훌륭합니다!\n" + (int)time + "초 동안 " + count + "회 하셨네요!\n" +

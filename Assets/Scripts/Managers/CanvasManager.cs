@@ -37,7 +37,7 @@ public class CanvasManager : MonoBehaviour {
 			switch (currentCanvasIndex) {
 			case (int)CanvasEnum.SettingPatnerPositionCanvas:
 				if (foundBeta) {
-					Wait (1.0f, nextCanvas);
+					Wait (2.0f, nextCanvas);
 				} 
 				break;
 			case (int)CanvasEnum.CompleteBeforeSettingCanvas:

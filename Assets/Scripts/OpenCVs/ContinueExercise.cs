@@ -4,6 +4,7 @@ using UnityEngine;
 
 using OpenCvSharp;
 using OpenCV;
+using System;
 
 public class ContinueExercise : WebCamProcess {
 
@@ -43,18 +44,42 @@ public class ContinueExercise : WebCamProcess {
         Cv2.MorphologyEx(_dstImage, _dstImage, MorphTypes.DILATE, StructuringElement);
         Cv2.MedianBlur(_dstImage, _dstImage, 1);
 
-        _dstImage.ConvertTo(_dstImage, MatType.CV_32F);
-        OpenCVImage.Instance().stepImage[0].ConvertTo(OpenCVImage.Instance().stepImage[0], MatType.CV_32F);
-        Cv2.Normalize(_dstImage, OpenCVImage.Instance().stepImage[0], 1.0, 0.0, NormTypes.L1);
-
-        compareValue = Cv2.CompareHist(_dstImage, OpenCVImage.Instance().stepImage[0], HistCompMethods.Chisqr);
-        if(compareValue >= 11000000.0)
-        {
-            Debug.Log(compareValue);
-            GameObject.Find("/UI/Canvas List/ContinueExerciseCanvas/Text").GetComponent<ContinueExerciseText>().count++;
-        }
-
+        CompareHistogram(_dstImage);
+        ChangeExercise();
+        
         Cv2.ImShow("Continue Exercise", _dstImage);
+    }
+
+    private void CompareHistogram(Mat _dstImage)
+    {
+        _dstImage.ConvertTo(_dstImage, MatType.CV_32F);
+        //OpenCVImage.Instance().stepImage[currentStep].ConvertTo(OpenCVImage.Instance().stepImage[currentStep], MatType.CV_32F);
+        Cv2.Normalize(_dstImage, OpenCVImage.Instance().stepImage[currentStep]); // , 1.0, 0.0, NormTypes.L1
+
+        compareValue = Cv2.CompareHist(OpenCVImage.Instance().stepImage[currentStep],
+            _dstImage, HistCompMethods.Chisqr);
+    }
+
+    int currentStep = 0;
+    bool IsCounted = false;
+    private void ChangeExercise()
+    {
+        if (currentStep == 0)
+        {
+            if ((compareValue >= OpenCVImage.Instance().stepOneHist) && (compareValue < OpenCVImage.Instance().stepTwoHist))
+            {
+                currentStep = 1;
+                IsCounted = false;
+            }
+        } else
+        {
+            if ((compareValue >= OpenCVImage.Instance().stepTwoHist) && !IsCounted)
+            {
+                IsCounted = true;
+                GameObject.Find("/UI/Canvas List/ContinueExerciseCanvas/Text").GetComponent<ContinueExerciseText>().count++;
+                currentStep = 0;
+            }
+        }
     }
 
     public Mat[] getImages()
