@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContinueExercise : MonoBehaviour {
+public class ContinueExerciseCanvas : MonoBehaviour {
 
 	public bool isContinuedAnimationToExercise = false;
 
@@ -17,7 +17,9 @@ public class ContinueExercise : MonoBehaviour {
 		if (this.isActiveAndEnabled) {
 			if (!isContinuedAnimationToExercise) {
 				isContinuedAnimationToExercise = true;
-				canvasListTransform.Find ("StopExerciseCanvas")
+                GameObject.Find("/ImageTarget/Beta")
+                    .GetComponent<BetaController>().continueExerciseAnimation();
+                canvasListTransform.Find ("StopExerciseCanvas")
 					.GetComponent<StopExercise> ().isStopedAnimationToExercise = false;
 			}
 		}

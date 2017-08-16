@@ -52,11 +52,22 @@ public class CanvasManager : MonoBehaviour {
 		}
 	}
 
+    // 버튼에 등록함
 	public void SelectExercise(string exercise) {
 		GameObject.Find("/ImageTarget/Beta")
 			.GetComponent<BetaController>().exercise = exercise;
 		nextCanvas();
 	}
+
+    bool isEndStep = false;
+    public void endStep()
+    {
+        if (!isEndStep)
+        {
+            isEndStep = true;
+            nextCanvas();
+        }
+    }
 
 	bool foundBeta {
 		get {

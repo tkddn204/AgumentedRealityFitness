@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using OpenCV;
 using Constants;
 
 public class StepByStepCanvas : MonoBehaviour {
@@ -32,7 +33,13 @@ public class StepByStepCanvas : MonoBehaviour {
 
     bool isCompletedCurrentStep = false;
     float time = 0.0f;
-    float endTime = 10.0f;
+    float endTime = 5.0f;
+
+    void nextCurrentStep()
+    {
+        currentStep++;
+        time = 0.0f;
+    }
 
     void Update()
     {
@@ -42,23 +49,30 @@ public class StepByStepCanvas : MonoBehaviour {
             switch (currentStep)
             {
                 case 1:
-                    // TODO: 잠시 멈추면 카운트를 셈, 3초가 지나면 다음 동작으로
                     if (time >= endTime)
                     {
-                        currentStep++;
+                        nextCurrentStep();
+                        OpenCVImage.Instance().stepOne = true;
                     }
                     break;
                 case 2:
-                    // TODO: 두번째 단계에서 잠깐 애니메이션을 멈춰야함
+                    if (time >= endTime)
+                    {
+                        nextCurrentStep();
+                        OpenCVImage.Instance().stepTwo = true;
+                    }
                     GameObject.Find("/ImageTarget/Beta")
                         .GetComponent<BetaController>().nextStep();
                     break;
-                default:
+                case 3:
                     GameObject.Find("/ImageTarget/Beta")
                         .GetComponent<BetaController>().endStep();
                     GameObject.Find("/ImageTarget/Beta")
                         .GetComponent<BetaController>().stopExerciseAnimation();
-                    Init();
+                    GameObject.Find("/Managers/Canvas Manager")
+                        .GetComponent<CanvasManager>().endStep();
+                    break;
+                default:
                     break;
             }
 

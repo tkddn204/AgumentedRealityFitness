@@ -24,7 +24,7 @@ public class ReadyExercise : MonoBehaviour {
 				GameObject.Find ("/ImageTarget/Beta")
 					.GetComponent<BetaController> ().readyExeciseAnimation();
 				canvasListTransform.Find ("ContinueExerciseCanvas")
-					.GetComponent<ContinueExercise> ().isContinuedAnimationToExercise = false;
+					.GetComponent<ContinueExerciseCanvas> ().isContinuedAnimationToExercise = false;
 			}
 		}
 	}
