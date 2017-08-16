@@ -15,9 +15,7 @@ public class ContinueExercise : WebCamProcess {
     Mat StructuringElement;
 
     Mat[] tempStepImage;
-
-    TrackBar trackbar;
-
+    
     public ContinueExercise()
     {
         _srcBinaryImage = new Mat();
@@ -28,8 +26,7 @@ public class ContinueExercise : WebCamProcess {
         size = new Size(5, 5);
         point = new Point(3, 3);
         StructuringElement = Cv2.GetStructuringElement(MorphShapes.Ellipse, size, point);
-
-        //trackbar = new TrackBar();
+        
     }
     double compareValue = 0.0;
     bool stepOneImageShow = false, stepTwoImageShow = false;

@@ -15,9 +15,7 @@ public class StepByStep : WebCamProcess {
 	Mat StructuringElement;
 
     Mat[] stepImageBuffer;
-
-    TrackBar trackbar;
-
+    
 	public StepByStep () {
         _srcBinaryImage = new Mat();
         _middleImage = new Mat();
@@ -30,7 +28,6 @@ public class StepByStep : WebCamProcess {
 
         _dstImageBuffer = new Mat();
         stepImageBufferOfBuffer = new Mat();
-        //trackbar = new TrackBar();
     }
     bool stepOneImageShow = false, stepTwoImageShow = false;
 	public void Process (Mat _srcImage, Mat _dstImage) {
