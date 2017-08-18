@@ -16,12 +16,11 @@ namespace OpenCV
     {
         private Mat sourceImage;
         private Vec3b[] sourceImageData;
-        private Mat transformImage;
 
         public Mat backgroundImage;
 
         public bool stepOne = false, stepTwo = false;
-        public double stepOneHist, stepTwoHist;
+        public double[] stepHist = new double[2];
         public Mat[] stepImage;
 
         private int imageHeight;
@@ -36,7 +35,6 @@ namespace OpenCV
 
             sourceImage = new Mat(height, width, MatType.CV_8UC3);
             sourceImageData = new Vec3b[height * width];
-            transformImage = new Mat(height, width, MatType.CV_8UC3);
         }
 
         // Color32 배열로 변환된 텍스쳐에서 Mat으로 변환
@@ -99,7 +97,7 @@ namespace OpenCV
             if (webCamProcess != null)
             {
                 Cv2.Flip(sourceImage, sourceImage, FlipMode.Y);
-                webCamProcess.Process(sourceImage, transformImage);
+                webCamProcess.Process(sourceImage);
             }
         }
 

@@ -12,11 +12,9 @@ public class CaptureBackground : WebCamProcess {
         backgroundImage = new Mat();
     }
 
-	public void Process (Mat _srcImage, Mat _dstImage) {
-		Cv2.CvtColor (_srcImage, _dstImage, ColorConversionCodes.BGR2GRAY);
-        Cv2.ImShow("BackgroundImage", _srcImage);
-
-        backgroundImage = _dstImage.Clone();
+	public void Process (Mat _srcImage) {
+		Cv2.CvtColor (_srcImage, backgroundImage, ColorConversionCodes.BGR2GRAY);
+        Cv2.ImShow("BackgroundImage", backgroundImage);
 	}
     public Mat[] getImages()
     {

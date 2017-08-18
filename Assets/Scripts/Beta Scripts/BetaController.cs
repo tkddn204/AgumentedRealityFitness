@@ -9,23 +9,30 @@ public class BetaController : MonoBehaviour {
     private Animator animator;
     private AnimatorStateInfo currentAnimatorState;
 
-    static int pushUpState;
-    static int sitUpState;
-    
+    private Transform canvasListTransform;
+
+    static int pushUpStateHash;
+    static int sitUpStateHash;
+
+    private string step = "Step";
+
     void Start() {
         animator = GetComponent<Animator>();
-        pushUpState = Animator.StringToHash("push_up");
-        sitUpState = Animator.StringToHash("situps");
+        canvasListTransform = GameObject.Find("/UI/Canvas List").transform;
+
+        pushUpStateHash = Animator.StringToHash("push_up");
+        sitUpStateHash = Animator.StringToHash("situps");
     }
     
     void FixedUpdate()
     {
         currentAnimatorState = animator.GetCurrentAnimatorStateInfo(0);
-        if (currentAnimatorState.shortNameHash == pushUpState ||
-            currentAnimatorState.shortNameHash == sitUpState)
+        if (currentAnimatorState.shortNameHash == pushUpStateHash ||
+            currentAnimatorState.shortNameHash == sitUpStateHash)
         {
-            GameObject.Find("/UI/Canvas List/ContinueExerciseCanvas/Text")
-                .GetComponent<ContinueExerciseText>().patnerCount = (int)currentAnimatorState.normalizedTime;
+            canvasListTransform.Find("ContinueExerciseCanvas")
+                .GetComponent<ContinueExerciseCanvas>().patnerCount
+                = (int)currentAnimatorState.normalizedTime;
         }
     }
 
@@ -37,11 +44,11 @@ public class BetaController : MonoBehaviour {
 		animator.SetInteger (exercise, 2);
 	}
 
-    private string step = "Step";
     public void nextStep()
     {
         animator.SetBool(step, true);
     }
+
     public void endStep()
     {
         animator.SetBool(step, false);
@@ -49,7 +56,6 @@ public class BetaController : MonoBehaviour {
 
 	public void stopExerciseAnimation()
     {
-        animator.SetBool(step, false);
         animator.SetInteger (exercise, 0);
 	}
 }

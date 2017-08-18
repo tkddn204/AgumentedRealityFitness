@@ -13,6 +13,9 @@ public class StepByStepCanvas : MonoBehaviour {
     private AudioSource okay;
     private Text text;
 
+    float time = 0.0f;
+    float endTime = 6.0f;
+
     private string currentExercise;
     private int currentStep = 1;
     private int maxStep;
@@ -22,74 +25,73 @@ public class StepByStepCanvas : MonoBehaviour {
         canvasListTransform = GameObject.Find("/UI/Canvas List").transform;
         text = canvasListTransform.Find("StepByStepCanvas/Text")
             .GetComponent<Text>();
-        currentExercise = GameObject.Find("/ImageTarget/Beta")
-            .GetComponent<BetaController>().exercise;
+
         okay = GetComponent<AudioSource>();
         okay.Stop();
 
         Init();
+
+        currentExercise = GameObject.Find("/ImageTarget/Beta")
+            .GetComponent<BetaController>().exercise;
         maxStep = Exercise.GetStep(currentExercise);
     }
-    void Init()
-    {
-        currentStep = 1;
-        time = 0.0f;
-    }
-
-    bool isCompletedCurrentStep = false;
-    float time = 0.0f;
-    float endTime = 5.0f;
-
-    void nextCurrentStep()
-    {
-        currentStep++;
-        time = 0.0f;
-    }
-
+    
     void Update()
     {
         if (this.isActiveAndEnabled)
         {
+            text.text = (int)time + " / " + (int)(endTime-1) + "초 안에 자세를 잡아주세요!\n"
+                + currentExercise + "  " + currentStep + " / " + maxStep;
+
             switch (currentStep)
             {
                 case 1:
                     time += Time.deltaTime;
                     if (time >= endTime)
                     {
-                        nextCurrentStep();
                         OpenCVImage.Instance().stepOne = true;
+                        nextCurrentStep();
                         okay.PlayOneShot(okay.clip);
+
+                        GameObject.Find("/ImageTarget/Beta")
+                            .GetComponent<BetaController>().nextStep();
                     }
                     break;
                 case 2:
                     time += Time.deltaTime;
                     if (time >= endTime)
                     {
-                        nextCurrentStep();
                         OpenCVImage.Instance().stepTwo = true;
+                        nextCurrentStep();
                         okay.PlayOneShot(okay.clip);
                     }
-                    GameObject.Find("/ImageTarget/Beta")
-                        .GetComponent<BetaController>().nextStep();
                     break;
                 case 3:
-                    time = 0.0f;
+                    text.text = "잘하셨습니다!";
                     if (!okay.isPlaying)
                     {
+                        Init();
                         GameObject.Find("/ImageTarget/Beta")
                             .GetComponent<BetaController>().endStep();
                         GameObject.Find("/ImageTarget/Beta")
                             .GetComponent<BetaController>().stopExerciseAnimation();
                         GameObject.Find("/Managers/Canvas Manager")
-                            .GetComponent<CanvasManager>().endStep();
+                            .GetComponent<CanvasManager>().nextCanvas();
                     }
                     break;
                 default:
                     break;
             }
-
-            text.text = (int)time + " / " + (int)endTime + "초 안에 자세를 잡아주세요!\n"
-                + currentExercise + " " + currentStep + " / " + maxStep;
         }
+    }
+    void Init()
+    {
+        currentStep = 1;
+        time = 0.0f;
+    }
+    void nextCurrentStep()
+    {
+        currentStep++;
+        time = 0.0f;
     }
 }

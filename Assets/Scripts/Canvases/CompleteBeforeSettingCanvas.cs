@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CompleteBeforeSetting : MonoBehaviour {
+public class CompleteBeforeSettingCanvas : MonoBehaviour {
 
     public bool isBeforeSettingAnimationToExercise = false;
-
-    void Start()
-    {
-    }
-
+    
     // Update is called once per frame
     void Update()
     {

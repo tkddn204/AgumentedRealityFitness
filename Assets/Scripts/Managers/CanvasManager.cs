@@ -44,7 +44,7 @@ public class CanvasManager : MonoBehaviour {
 				Wait (2.0f, nextCanvas);
 				break;
 			case (int)CanvasEnum.ReadyExerciseCanvas:
-				Wait (2.0f, nextCanvas);
+				Wait (3.0f, nextCanvas);
 				break;
 			default:
 				break;
@@ -58,16 +58,6 @@ public class CanvasManager : MonoBehaviour {
 			.GetComponent<BetaController>().exercise = exercise;
 		nextCanvas();
 	}
-
-    bool isEndStep = false;
-    public void endStep()
-    {
-        if (!isEndStep)
-        {
-            isEndStep = true;
-            nextCanvas();
-        }
-    }
 
 	bool foundBeta {
 		get {

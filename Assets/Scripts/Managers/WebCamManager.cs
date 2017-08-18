@@ -23,9 +23,13 @@ public class WebCamManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (CameraDevice.Instance.SetFrameFormat(Image.PIXEL_FORMAT.RGBA8888, true)) {
-            CameraDevice.Instance.GetCameraImage(Image.PIXEL_FORMAT.RGBA8888).CopyToTexture(webCamImage);
-            openCVImage.TextureToMat(webCamImage.GetPixels32());
+        if (CameraDevice.Instance.IsActive())
+        {
+            if (CameraDevice.Instance.SetFrameFormat(Image.PIXEL_FORMAT.RGBA8888, true))
+            {
+                CameraDevice.Instance.GetCameraImage(Image.PIXEL_FORMAT.RGBA8888).CopyToTexture(webCamImage);
+                openCVImage.TextureToMat(webCamImage.GetPixels32());
+            }
         }
     }
 }

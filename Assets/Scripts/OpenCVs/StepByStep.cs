@@ -1,97 +1,97 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 using OpenCvSharp;
 using OpenCV;
-using System;
 
 public class StepByStep : WebCamProcess {
 
 	OpenCVImage openCVImage;
-	Size size;
-    Point point;
+
     Mat _srcBinaryImage, _middleImage;
 	Mat StructuringElement;
 
+    Mat _dstImageBuffer, stepImageBufferOfBuffer;
     Mat[] stepImageBuffer;
-    
-	public StepByStep () {
+
+    bool stepOneImageShow = false, stepTwoImageShow = false;
+
+    public StepByStep ()
+    {
+        openCVImage = OpenCVImage.Instance();
+
         _srcBinaryImage = new Mat();
         _middleImage = new Mat();
-        stepImageBuffer = new Mat[2];
-
-        openCVImage = OpenCVImage.Instance();
-		size = new Size (5, 5);
-        point = new Point(3, 3);
-        StructuringElement = Cv2.GetStructuringElement(MorphShapes.Ellipse, size, point);
+        StructuringElement = Cv2.GetStructuringElement(
+            MorphShapes.Ellipse, new Size(5, 5), new Point(3, 3));
 
         _dstImageBuffer = new Mat();
         stepImageBufferOfBuffer = new Mat();
+        stepImageBuffer = new Mat[2];
     }
-    bool stepOneImageShow = false, stepTwoImageShow = false;
-	public void Process (Mat _srcImage, Mat _dstImage) {
+	public void Process (Mat _srcImage) {
 		Cv2.CvtColor (_srcImage, _srcBinaryImage, ColorConversionCodes.BGR2GRAY);
 
         // 배경 제거
         Cv2.Subtract(openCVImage.backgroundImage, _srcBinaryImage, _middleImage);
 
         // 이진화 + 모폴로지 연산(Dilate(팽창) + 메디안 블러) trackbar.thr
-        Cv2.Threshold (_middleImage, _dstImage, 38.0d, 256.0d, ThresholdTypes.Binary);
-        Cv2.MorphologyEx(_dstImage, _dstImage, MorphTypes.DILATE, StructuringElement);
-        Cv2.MedianBlur(_dstImage, _dstImage, 1);
+        Cv2.Threshold (_middleImage, _middleImage, 38.0d, 256.0d, ThresholdTypes.Binary);
+        Cv2.MorphologyEx(_middleImage, _middleImage, MorphTypes.DILATE, StructuringElement);
+        Cv2.MedianBlur(_middleImage, _middleImage, 1);
 
-        Cv2.ImShow ("Step By Step", _dstImage);
+        Cv2.ImShow ("Step By Step", _middleImage);
 
-        ChangeStep(_dstImage);
-
+        ChangeStep(_middleImage);
+        StepImageShow();
     }
 
     private void ChangeStep(Mat _dstImage)
     {
-        if (OpenCVImage.Instance().stepOne)
+        if (openCVImage.stepOne)
         {
-            OpenCVImage.Instance().stepOne = false;
+            openCVImage.stepOne = false;
             stepImageBuffer[0] = _dstImage.Clone();
             CompareHistogram(_dstImage, 0);
             stepOneImageShow = true;
         }
-        else if (OpenCVImage.Instance().stepTwo)
+        else if (openCVImage.stepTwo)
         {
-            OpenCVImage.Instance().stepTwo = false;
+            openCVImage.stepTwo = false;
             stepImageBuffer[1] = _dstImage.Clone();
             CompareHistogram(_dstImage, 1);
             stepTwoImageShow = true;
         }
+    }
 
+    private void StepImageShow()
+    {
         if (stepOneImageShow)
         {
-            Debug.Log("스텝원히스트 : " + OpenCVImage.Instance().stepOneHist);
+            Debug.Log("스텝원히스트 : " + openCVImage.stepHist[0]);
             Cv2.ImShow("Step 1", stepImageBuffer[0]);
         }
         if (stepTwoImageShow)
         {
-            Debug.Log("스텝투히스트 : " + OpenCVImage.Instance().stepTwoHist);
+            Debug.Log("스텝투히스트 : " + openCVImage.stepHist[1]);
             Cv2.ImShow("Step 2", stepImageBuffer[1]);
         }
     }
-    Mat _dstImageBuffer, stepImageBufferOfBuffer;
+
     private void CompareHistogram(Mat _dstImage, int step)
     {
         _dstImageBuffer = _dstImage.Clone();
         stepImageBufferOfBuffer = stepImageBuffer[step].Clone();
+
         _dstImageBuffer.ConvertTo(_dstImageBuffer, MatType.CV_32F);
         stepImageBufferOfBuffer.ConvertTo(stepImageBufferOfBuffer, MatType.CV_32F);
-        Cv2.Normalize(_dstImageBuffer, stepImageBufferOfBuffer); //, 1.0, 0.0, NormTypes.L1
-        if (step == 0)
-        {
-            OpenCVImage.Instance().stepOneHist = Cv2.CompareHist(stepImageBufferOfBuffer,
-                _dstImageBuffer, HistCompMethods.Chisqr);
-        } else
-        {
-            OpenCVImage.Instance().stepTwoHist = Cv2.CompareHist(stepImageBufferOfBuffer,
-                _dstImageBuffer, HistCompMethods.Chisqr);
-        }
+
+        Cv2.Normalize(_dstImageBuffer, stepImageBufferOfBuffer);
+
+        openCVImage.stepHist[step] = Cv2.CompareHist(stepImageBufferOfBuffer,
+            _dstImageBuffer, HistCompMethods.Chisqr);
     }
 
     public Mat[] getImages()

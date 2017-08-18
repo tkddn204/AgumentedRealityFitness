@@ -2,6 +2,6 @@
 using OpenCvSharp;
 
 public interface WebCamProcess {
-	void Process (Mat _srcImage, Mat _dstImage);
+	void Process (Mat _srcImage);
     Mat[] getImages();
 }
