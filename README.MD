@@ -1,6 +1,7 @@
 AugmentedRealityFitness
 ===
-**This project was completed.**
+**This project was DEPRECATED.**
+
 forked from [OpenCVSharp3Unity](https://github.com/qian256/OpenCVSharp3Unity)
 
 ## What make?
